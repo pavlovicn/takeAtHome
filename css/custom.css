@@ -1,1 +1,75 @@
 
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+
+* {
+	font-family: 'Open Sans', sans-serif;
+}
+
+section {
+	width: 100%;
+	float: left;
+	clear: left;
+	position: relative;
+	padding-left: 32px;
+	padding-right: 32px;
+}
+
+.finding-paragraph {
+	font-size: 24px;
+	color: #0B486B;
+	text-align: center;
+	margin-top: 64px;
+	margin-bottom: 8px;
+}
+
+#results {
+	padding-bottom: 24px;
+}
+
+.event-collapse {
+	border-bottom: 2px solid #A8DBA8;
+}
+
+.collapse-head {
+	padding: 20px 16px 10px;
+	cursor: pointer;
+}
+
+.collapse-head h3 {
+	font-size: 24px;
+	font-weight: 600;
+	color: #0B486B;
+	margin-top: 0;
+}
+
+.collapse-head br {
+	display: none;
+}
+
+.collapse-head p {
+	color: #3B8686;
+	margin-bottom: 0;
+}
+
+.collapse-body {
+	border-top: 1px solid #CFF09E;
+	padding: 0 16px;
+}
+
+.collapse-body h5 {
+	color: #3B8686;
+}
+
+.collapse-body p {
+	color: #0B486B;
+}
+
+.collapse-body p img {
+	max-width: 100px;
+}
+
+.collapse-body .meetup-link {
+	font-size: 20px;
+	margin-bottom: 0;
+	padding-bottom: 10px;
+}
