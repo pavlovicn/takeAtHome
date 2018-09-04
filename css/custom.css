@@ -85,3 +85,13 @@ section {
 	margin-bottom: 0;
 	padding-bottom: 10px;
 }
+
+@media screen and (max-width: 650px) {
+	.collapse-head h3 {
+		text-align: center;
+	}
+
+	.collapse-head br {
+		display: block;
+	}
+}
