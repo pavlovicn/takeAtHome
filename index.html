@@ -31,7 +31,6 @@
 				method:'get',
 				url:url,
 				success:function(result) {
-					console.dir(result);
 					//add to data
 					data.push.apply(data, result.data.events);
 					if(result.meta.next_link) {
@@ -56,8 +55,21 @@
 				for(var i=0;i<res.length; i++) {
 					var event = res[i];
 					
+					s +="<div class='event-collapse'>";
+					//collapse header
+					s += "<div class='collapse-head' data-toggle='collapse' data-target='#event" + (i+1)+ "'>";
 					s += "<h3>"+event.name+"</h3>";
 					s += "<p><strong>Time:</strong> "+event.local_date + ", " + event.local_time + "h. <br><strong>Location:</strong> " + event.venue.name + ", " + event.venue.address_1 + ", " + event.venue.city +" </p></div>";
+					
+					//collapse boddy
+					s += "<div id='event" + (i+1)+ "' class='collapse collapse-body'>";
+					s += "<h5><strong>From:</strong> " + event.group.urlname + "</h5>";
+					s += "<p>"+ event.description + "</p>";
+					
+					s += "<h5>How to find us: </h5><p>" + event.how_to_find_us + "</p>";
+					
+					s += "<h5 class='meetup-link'>More about this event on <a href='" + event.link + "' target='_blank'>meetup.com</a></h5>";
+					s += "</div></div>";
 				}
 				$results.html(s);
 			});
