@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">	
+	<title>Take at home</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="css/custom.css" rel="stylesheet">
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+
+	<section>
+		<h2 class="headline">Upcoming events in Belgrade</h2>
+		<div id="results"></div>
+	</section>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<script>
+		function fetchEvents(url, cb, data) {
+			if(!data) data = [];
+			
+			$.ajax({
+				
+				dataType:'jsonp',
+				method:'get',
+				url:url,
+				success:function(result) {
+					//add to data
+					data.push.apply(data, result.data.events);
+					if(result.meta.next_link) {
+						var nextUrl = result.meta.next_link;
+						fetchEvents(nextUrl, cb, data);
+					} else {
+						cb(data);
+					}
+				}
+			});		
+		}
+
+		$(document).ready(function() {
+			
+			var $results = $("#results");
+
+			$results.html("<p class='finding-paragraph'>Finding meetups in Belgrade.</p><img class='loading center-block' src='img/loading.gif'>");
+
+			fetchEvents("https://api.meetup.com/find/upcoming_events?photo-host=public&page=20&sig_id=262450086&radius=10&lon=20.44&lat=44.78&sig=6849e0567178c78fcd5e65398a79e38d62948c58", function(res) {
+	
+				var s = "";
+				for(var i=0; i<res.length; i++) {
+					var event = res[i];
+					
+					s +="<div class='event-collapse'>";
+					//collapse header
+					s += "<div class='collapse-head' data-toggle='collapse' data-target='#event" + (i+1)+ "'>";
+					s += "<h3>"+event.name+"</h3>";
+					s += "<p><strong>Time:</strong> "+event.local_date + ", " + event.local_time + "h. <br><strong>Location:</strong> " + event.venue.name + ", " + event.venue.address_1 + ", " + event.venue.city +" </p></div>";
+					
+					//collapse boddy
+					s += "<div id='event" + (i+1)+ "' class='collapse collapse-body'>";
+					s += "<h5><strong>From:</strong> " + event.group.urlname + "</h5>";
+					s += "<p>"+ event.description + "</p>";
+					
+					if(typeof event.how_to_find_us !== "undefined") {
+						s += "<h5>How to find us: </h5><p>" + event.how_to_find_us + "</p>";
+					}
+					s += "<h5 class='meetup-link'>More about this event on <a href='" + event.link + "' target='_blank'>meetup.com</a></h5>";
+					s += "</div></div>";
+				}
+				$results.html(s);
+			});
+		});
+	</script>
+
+</body>
+</html>
