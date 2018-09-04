@@ -16,9 +16,51 @@
 </head>
 <body>
 
-
+	<div id="results"></div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<script>
+		function fetchGroups(url, cb, data) {
+			if(!data) data = [];
+			
+			$.ajax({
+				
+				dataType:'jsonp',
+				method:'get',
+				url:url,
+				success:function(result) {
+					console.dir(result);
+					//add to data
+					data.push.apply(data, result.data.events);
+					if(result.meta.next_link) {
+						var nextUrl = result.meta.next_link;
+						fetchGroups(nextUrl, cb, data);
+					} else {
+						cb(data);
+					}
+				}
+			});	
+		}
+
+		$(document).ready(function() {
+			
+			var $results = $("#results");
+
+			$results.html("<p>Finding meetups with Ionic in the description.</p>");
+
+			fetchGroups("https://api.meetup.com/find/upcoming_events?photo-host=public&page=20&sig_id=262450086&radius=10&lon=20.44&lat=44.78&sig=6849e0567178c78fcd5e65398a79e38d62948c58", function(res) {
+				console.log("totally done");
+				console.dir(res);	
+
+				var s = "";
+				for(var i=0;i<res.length; i++) {
+					s += "<h2>event" + (i+1) + "</h2>";
+				}
+				$results.html(s);
+			});
+		});
+	</script>
 </body>
 </html>
