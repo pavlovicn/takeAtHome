@@ -48,15 +48,16 @@
 			
 			var $results = $("#results");
 
-			$results.html("<p>Finding meetups with Ionic in the description.</p>");
+			$results.html("<p class='finding-paragraph'>Finding meetups in Belgrade.</p><img class='loading center-block' src='img/loading.gif'>");
 
-			fetchGroups("https://api.meetup.com/find/upcoming_events?photo-host=public&page=20&sig_id=262450086&radius=10&lon=20.44&lat=44.78&sig=6849e0567178c78fcd5e65398a79e38d62948c58", function(res) {
-				console.log("totally done");
-				console.dir(res);	
+			fetchGroups("https://api.meetup.com/find/upcoming_events?photo-host=public&page=20&sig_id=262450086&radius=10&lon=20.44&lat=44.78&sig=6849e0567178c78fcd5e65398a79e38d62948c58", function(res) {	
 
 				var s = "";
 				for(var i=0;i<res.length; i++) {
-					s += "<h2>event" + (i+1) + "</h2>";
+					var event = res[i];
+					
+					s += "<h3>"+event.name+"</h3>";
+					s += "<p><strong>Time:</strong> "+event.local_date + ", " + event.local_time + "h. <br><strong>Location:</strong> " + event.venue.name + ", " + event.venue.address_1 + ", " + event.venue.city +" </p></div>";
 				}
 				$results.html(s);
 			});
