@@ -1,10 +1,26 @@
 # takeAtHome
 
+It display all future events in Belgrade from meetup.com with details
 
-I find on internet example of using meetup api and getting data via api.
 
-I adapt to show me events for specific lat and log (Belgrade).
+## Running the tests
 
-And for every event dsplay name, time, date, description, link to event on meetup.com ...
+App can be tested online on
 
-And then, I use css to make things a little bit nicer.
+https://rawgit.com/pavlovicn/takeAtHome/master/index.html
+
+It also can be downloaded and tested in any modern browser
+
+
+## Built With
+
+* HTML
+* CSS
+* JavaScript
+* jQuery
+* Bootstrap
+
+
+## Authors
+
+* Nikola Pavlović
